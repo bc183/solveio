@@ -58,7 +58,7 @@ export default function Header() {
                     <input className="shadow appearance-none mx-2 bg-gray-600 border rounded w-80 py-2 px-3 text-white" value={searchTerm} onChange={onChangeSearch}  id="search" type="text" placeholder="Search. For tags use #, For users use @"></input>
                 {!isLoggedIn && 
                     <motion.li initial={{ y: -200 }} animate={{ y: 0 }} className="nav-item active mt-2">
-                        <a className="text-white text-decoration-none bg-gray-700 py-2 px-3 rounded" href="/login">Login</a>
+                        <Link className="text-white text-decoration-none bg-gray-700 py-2 px-3 rounded" to="/login">Login</Link>
                     </motion.li>}
                         {isLoggedIn && 
                     <React.Fragment>
