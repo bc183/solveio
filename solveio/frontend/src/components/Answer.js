@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import TailwindCard from './TailwindCard'
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { monokaiSublime } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import Vote from './Vote';
@@ -41,14 +41,14 @@ export default function Answer({ answer, isUserAnswer = false }) {
             <motion.div initial={{ opacity: 0 }} animate={{ opacity : 1 }}>
                 <div className="row">
                     <div className="col-1">
-                        <i className="fas fa-user-circle px-2 text-white"></i>
+                        <img className="rounded" src={answer?.user?.profile_pic} alt="profile"></img>
                     </div>
                     <div className="col-9 mx-3 mx-sm-0">
                         <div className="flex justify-between">
-                            <p className="text-md text-white-50 hover:cursor-pointer inline">{ answer.user?.user_name }</p>
+                            <Link className="text-md text-white-50 hover:cursor-pointer inline no-underline" to={`/user/${answer?.user?.id}`}>{ answer.user?.user_name }</Link>
                             <p className="text-md text-white-50 inline">{ moment(answer.created_at).fromNow() }</p>
                         </div>
-                    </div>
+                    </div>  
                     {isLoggedIn && user?.id === answer?.user?.id && (<div className="col-2 flex justify-between">
                         <Link to={`/answer/${answer.id}/edit`}>
                             <i className="fas fa-edit text-white-50 hover:cursor-pointer"></i>

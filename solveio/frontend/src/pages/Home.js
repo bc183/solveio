@@ -38,7 +38,7 @@ export default function Home() {
                     </div>
                     <PostList postList={postList} />
                     {postList?.length > 0 && !errorMessage && (postList?.length % PAGINATION_COUNT) === 0 && <h5 className='text-white-50 text-center font-semibold hover:cursor-pointer mb-4' onClick={() => setPage(page + 1)}>{"Load more..."}</h5>}
-                    { (postList?.length % PAGINATION_COUNT) < PAGINATION_COUNT && (postList?.length % PAGINATION_COUNT) !== 0 &&  <h5 className='text-white-50 text-center font-semibold hover:cursor-pointer mb-4'>{"You are all caught up."}</h5>}
+                    { (postList?.length % PAGINATION_COUNT) <= PAGINATION_COUNT && (postList?.length % PAGINATION_COUNT) !== 0 && <h5 className='text-white-50 text-center font-semibold hover:cursor-pointer mb-4'>{"You are all caught up."}</h5>}
                     {postList?.length === 0 && <h5 className='text-white-50 text-center font-semibold mb-4'>{errorMessage ? errorMessage: "No posts to show."}</h5>}
                 </motion.div>
                 <TrendingTags />

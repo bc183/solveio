@@ -1,6 +1,6 @@
+import { motion } from 'framer-motion';
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from "react-router-dom"
 import { Link } from 'react-router-dom';
 import RingLoader from "react-spinners/RingLoader";
 import TailwindCard from '../components/TailwindCard';
@@ -75,7 +75,7 @@ export default function Login() {
     return (
         <div className="container-fluid background">
             <div className="row">
-                <div className="col-12 col-md-4 offset-md-4 mt-5">
+                <motion.div initial={{ x: -200 }} animate={{ x:0 }} className="col-12 col-md-4 offset-md-4 mt-5">
                     <div className="text-center">
                         <p className="text-white font-bold text-xl">Solve.io</p>
                     </div>
@@ -104,8 +104,9 @@ export default function Login() {
                             { loading && <RingLoader size={40} css={"color: #4f545c; display: inline;"} /> }
                         </div>
                         <p className="text-sm text-white mt-2">Don't have an account ? <span><Link className="inline text-decoration-none" to="/register">Register</Link></span></p>
+                        <p className="text-sm text-white">Forgot password ?  <span><Link className="inline text-decoration-none" to="/forgot-password">Click here</Link></span></p>
                     </TailwindCard>
-                </div>
+                </motion.div>
             </div>
         </div>
     )

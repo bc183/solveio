@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import TailwindCard from './TailwindCard'
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import SyntaxHighlighter from "react-syntax-highlighter";
@@ -67,7 +67,7 @@ export default function Post({ post, isHome, isSearch, isUserPost = false }) {
             <TailwindCard bgClass="bg-dark">
                 <div className="row">
                     <div className="col-1">
-                        <i className="fas fa-user-circle px-2 text-white"></i>
+                        <img className="rounded" src={post?.user?.profile_pic} alt="profile"></img>
                     </div>
                     <div className="col-9 mx-3 mx-sm-0">
                         <div className="flex justify-between">

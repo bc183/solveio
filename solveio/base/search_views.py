@@ -3,6 +3,8 @@ from rest_framework import status
 from rest_framework.response import Response
 from .serializers import PostSerializer
 from .models import Post, Tag
+from users.models import CustomUser
+from users.serializers import UserSerializer
 from .pagination import StandardResultsSetPagination
 
 @api_view(["GET"])
@@ -22,4 +24,13 @@ def search_in_tags(request, k):
     paginator = StandardResultsSetPagination()
     paginated_search_results = paginator.paginate_queryset(search_results, request)
     serializer = PostSerializer(paginated_search_results, many=True, context = {"request": request})
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+@api_view(["GET"])
+def search_in_users(request, k):
+    search_term = k.replace("+", "_")
+    search_results = CustomUser.objects.filter(user_name__icontains=search_term)
+    paginator = StandardResultsSetPagination()
+    paginated_search_results = paginator.paginate_queryset(search_results, request)
+    serializer = UserSerializer(paginated_search_results, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)

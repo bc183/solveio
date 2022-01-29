@@ -11,7 +11,8 @@ export default function User({ user }) {
     <TailwindCard bgClass={"bg-dark"}>
         <div className="flex align-items-center justify-center">
             <div className="flex align-items-center justify-center flex-column">
-                <i className="fas fa-user-circle fa-5x px-2 text-white"></i>
+                <img width={300} height={300} src={user?.profile_pic} alt="profile"></img>
+                <p className="font-semibold text-white-50 mt-2">{user?.first_name} {user?.last_name}</p>
                 <p className="font-semibold text-white-50 mt-2">{user?.user_name}</p>
                 {user?.id === loggedInUser?.id && <p className="font-semibold text-white-50 mt-2">{user?.email}</p>}
                 <p className="font-semibold text-white-50 mt-1">Answers posted {user?.answers}</p>

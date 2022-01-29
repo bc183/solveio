@@ -4,19 +4,23 @@ import PostList from '../components/PostList';
 import HashLoader from "react-spinners/HashLoader";
 import { motion } from "framer-motion";
 import 'highlight.js/styles/github.css';
-import { Link } from 'react-router-dom';
 import PopularUsers from '../components/PopularUsers';
 import TrendingTags from '../components/TrendingTags';
 import { getSearchList } from '../redux/actions/searchListAction';
 import { PAGINATION_COUNT } from '../redux/constants/paginationConstants';
+import { useLocation } from 'react-router';
+import UserList from '../components/UserList';
 
 export default function SearchView() {
 
     const [page, setPage] = useState(1);
 
+
     const { searchTerm } = useSelector(state => state.search)
 
-    const { searchList, errorMessage, loading } = useSelector(state => state.searchList);
+    const { searchList, isUser ,errorMessage, loading } = useSelector(state => state.searchList);
+
+    console.log(isUser);
 
     const dispatch = useDispatch();
     useEffect(() => {
@@ -44,7 +48,8 @@ export default function SearchView() {
                     <div className="flex justify-between mb-3">
                         <h4 className="text-white-50 inline">Search Results for {searchTerm} </h4>
                     </div>
-                    <PostList postList={searchList} isSearch />
+                    {!isUser && <PostList postList={searchList} isSearch />}
+                    {isUser && <UserList userList={searchList} />}
                     {searchList?.length > 0 && !errorMessage && (searchList?.length % PAGINATION_COUNT) === 0 && <h5 className='text-white-50 text-center font-semibold hover:cursor-pointer mb-4' onClick={() => setPage(page + 1)}>{"Load more..."}</h5>}
                     { (searchList?.length % PAGINATION_COUNT) < PAGINATION_COUNT && (searchList?.length % PAGINATION_COUNT) !== 0 &&  <h5 className='text-white-50 text-center font-semibold hover:cursor-poi nter mb-4'>{"You are all caught up."}</h5>}
                     {searchList?.length === 0 && <h5 className='text-white-50 text-center font-semibold mb-4'>{errorMessage ? errorMessage: "No posts to show."}</h5>}

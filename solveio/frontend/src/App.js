@@ -14,6 +14,10 @@ import CreateAnswer from './pages/CreateAnswer';
 import EditAnswer from './pages/EditAnswer';
 import SearchView from './pages/SearchView';
 import ViewUser from './pages/ViewUser';
+import ForgotPassword from './pages/ForgotPassword';
+import UpdatePassword from './pages/UpdatePassword';
+import EditProfile from './pages/EditProfile';
+import CheckPassword from './pages/CheckPassword';
 function App() {
 
   return (
@@ -24,7 +28,9 @@ function App() {
           <Route path="/post/create" element={ <CreatePost /> } />
           <Route path="/answer/create/:id" element={ <CreateAnswer /> } />
           <Route path="/post/:id/edit" element={ <EditPost /> } />
+          <Route path="/user/:id/edit" element={ <EditProfile /> } />
           <Route path="/answer/:id/edit" element={ <EditAnswer /> } />
+          <Route path="/update-password" element={ <CheckPassword /> } />
         </Route>
         <Route path="" element={ <Home /> } />
         <Route path="search/" element={ <SearchView /> } />
@@ -33,6 +39,8 @@ function App() {
         <Route element={ <PreventLoginRoutes /> }>
           <Route path="/login" element={ <Login /> } preventLogin={true} />
           <Route path="/register" element={ <Register /> } preventLogin={true}/>
+          <Route path="/forgot-password" element={ <ForgotPassword /> } preventLogin={true}/>
+          <Route path="/update-password/:token" element={ <UpdatePassword /> } preventLogin={true}/>
         </Route>
       </Routes>
     </Router>

@@ -2,7 +2,7 @@ import { POST_LIST_FAILURE } from "../constants/postListConstants";
 import { CLEAR_SEARCH_LIST, SEARCH_LIST_FAILURE, SEARCH_LIST_REQUEST, SEARCH_LIST_SUCCESS } from "../constants/searchListConstants";
 import { SEARCH_VOTE } from "../constants/voteConstants";
 
-export const searchListReducer = (state = { searchList: [], loading: false, errorMessage: null }, action) => {
+export const searchListReducer = (state = { searchList: [], loading: false, errorMessage: null, isUser: false }, action) => {
     switch (action.type) {
         case SEARCH_LIST_REQUEST:
             return {
@@ -15,7 +15,8 @@ export const searchListReducer = (state = { searchList: [], loading: false, erro
                 return {
                     searchList: action.payload.data,
                     loading: false,
-                    errorMessage: null
+                    errorMessage: null,
+                    isUser: action.payload.isUser
                 }
             }
             let temp = state.searchList;
@@ -23,7 +24,8 @@ export const searchListReducer = (state = { searchList: [], loading: false, erro
             return {
                 searchList: temp,
                 loading: false,
-                errorMessage: null
+                errorMessage: null,
+                isUser: action.payload.isUser
             }
         case SEARCH_LIST_FAILURE:
             return {

@@ -10,9 +10,13 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
+import os
 from pathlib import Path
 from datetime import timedelta
 import environ
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
 env = environ.Env()
 # reading .env file
@@ -48,6 +52,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt.token_blacklist',
     'corsheaders',
+    'cloudinary',
 
     #myapps
     'users',
@@ -70,7 +75,7 @@ ROOT_URLCONF = 'solveio.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, "solveio/templates")],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -180,5 +185,22 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'users.CustomUser'
+
+#smtp conf
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = env("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
+
+#cloudinary config
+cloudinary.config( 
+  cloud_name = env("CLOUD_NAME"), 
+  api_key = env("CLOUD_API_KEY"), 
+  api_secret = env("CLOUD_API_SECRET") 
+)
+
+CLIENT_URL = 'http://localhost:3000'
 
 CORS_ALLOWED_ORIGINS = ["http://localhost:3000"]

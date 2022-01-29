@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .search_views import search, search_in_tags
+from .search_views import search, search_in_tags, search_in_users
 
 from .statistic_views import get_popular_users, get_trending_tags
 
@@ -34,5 +34,6 @@ urlpatterns = [
 
     path("search/<str:k>/", search, name="search"),
     path("search-tag/<str:k>/", search_in_tags, name="search_in_tags"),
+    path("search-users/<str:k>/", search_in_users, name="search_in_users"),
 
 ]

@@ -21,6 +21,14 @@ export default function Header() {
 
     const onChangeSearch = (e) => {
         dispatch({ type: SET_SEARCH_TERM, payload: e.target.value});
+        if (e.target.value !== "" && e.target.value.charAt(0) === "@") {
+            navigate("/search", {
+                state: {
+                    isUser: true
+                }
+            });
+            return;
+        }   
         navigate("/search");
     }
 
@@ -31,10 +39,13 @@ export default function Header() {
         }
     }, [location.pathname, dispatch])
 
-    let isLoginUrls = ["/login", "/register"].includes(location.pathname)
+    let isLoginUrls = ["/login", "/register", "/forgot-password"].includes(location.pathname);
+    if (location.pathname.startsWith("/update-password") && location.pathname !== "/update-password") {
+        isLoginUrls = true;
+    }
 
     return (
-        <nav className={`${isLoginUrls ? "d-none": ""} navbar navbar-expand-lg navbar-dark bg-dark py-3`}>
+        <nav className={`${isLoginUrls ? "d-none": ""} navbar fixed-top navbar-expand-lg navbar-dark bg-dark py-3`}>
             <motion.span initial={{ y: -200 }} animate={{ y: 0 }} className="font-semibold text-xl text-white tracking-tight mx-2">
                 <NavLink  to="/" className="text-white text-decoration-none" >Solve.io</NavLink>
             </motion.span>
@@ -44,7 +55,7 @@ export default function Header() {
 
             <div className="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul className="navbar-nav ml-auto mr-5">
-                    <input className="shadow appearance-none mx-2 bg-gray-600 border rounded w-72 py-2 px-3 text-white" value={searchTerm} onChange={onChangeSearch}  id="search" type="text" placeholder="Search. To search tags, use #."></input>
+                    <input className="shadow appearance-none mx-2 bg-gray-600 border rounded w-80 py-2 px-3 text-white" value={searchTerm} onChange={onChangeSearch}  id="search" type="text" placeholder="Search. For tags use #, For users use @"></input>
                 {!isLoggedIn && 
                     <motion.li initial={{ y: -200 }} animate={{ y: 0 }} className="nav-item active mt-2">
                         <a className="text-white text-decoration-none bg-gray-700 py-2 px-3 rounded" href="/login">Login</a>
@@ -59,7 +70,7 @@ export default function Header() {
 
                                 <div className="dropdown-menu" style={{ backgroundColor: css_var.primary }} aria-labelledby="dropdownMenuLink">
                                     <Link to={`/user/${user?.id}`} className="dropdown-item text-white hover:!bg-gray-700">View Profile</Link>
-                                    <Link to="/edit-profile" className="dropdown-item text-white hover:!bg-gray-700">Edit profile</Link>
+                                    <Link to={`/user/${user?.id}/edit`} className="dropdown-item text-white hover:!bg-gray-700">Edit profile</Link>
                                 </div>
                             </div>
                         </motion.li>

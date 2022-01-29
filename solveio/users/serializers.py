@@ -19,6 +19,7 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 class UserSerializer(serializers.ModelSerializer):
 
     answers = serializers.SerializerMethodField()
+    profile_pic = serializers.SerializerMethodField()
 
     def get_answers(self, data):
         if type(data) is collections.OrderedDict:
@@ -26,9 +27,16 @@ class UserSerializer(serializers.ModelSerializer):
         answers = data.answer_set.all()
         return answers.__len__()
 
+    def get_profile_pic(self, data):
+        if type(data) is collections.OrderedDict:
+            return None
+        if type(data.profile_pic) is not str:
+            return data.profile_pic.url
+        return data.profile_pic
+
     class Meta:
         model = CustomUser
-        fields = ["id", "user_name", "first_name", "last_name", "password", "start_date", "email", "answers"]
+        fields = ["id", "user_name", "first_name", "last_name", "password", "start_date", "email", "answers", "profile_pic"]
         read_only_fields=("id", "answers")
         extra_kwargs = {
             'password': {'write_only': True}
