@@ -1,4 +1,3 @@
-from tkinter.tix import Tree
 from django.db import models
 from django.utils import module_loading
 from users.models import CustomUser

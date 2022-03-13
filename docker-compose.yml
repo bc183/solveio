@@ -2,16 +2,16 @@ version: '3'
 
 services:
   backend:
-    build:
+    build: 
       context: ./solveio
     command: gunicorn solveio.wsgi --bind 0.0.0.0:8000
     ports:
       - "8000:8000"
   frontend:
-    build:
-      context: ./solveio/frontend
+    build: 
+      context: ./frontend
     volumes:
-      - react_build:/solveio/frontend/build
+      - react_build:/react/build
   nginx:
     image: nginx:latest
     ports:
@@ -19,8 +19,5 @@ services:
     volumes:
       - ./nginx/nginx-setup.conf:/etc/nginx/conf.d/default.conf:ro
       - react_build:/var/www/react
-    depends_on:
-      - backend
-      - frontend
 volumes:
   react_build:
